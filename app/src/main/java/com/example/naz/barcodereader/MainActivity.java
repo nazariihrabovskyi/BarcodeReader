@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements OnClickListener {
     DatabaseHelper myDb;
     private Button scanBtn;
+    Button btnAddData;
     private TextView formatTxt, contentTxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,29 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         contentTxt = (TextView)findViewById(R.id.scan_content);
         scanBtn.setOnClickListener(this);
         myDb = new DatabaseHelper(this);
+        btnAddData = (Button) findViewById(R.id.button_add);
+        AddData();
     }
+
+    public void  AddData()
+    {
+        btnAddData.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean isInsearted = myDb.insertData(formatTxt.getText().toString(),
+                                contentTxt.getText().toString());
+                        if (isInsearted= true)
+                            Toast.makeText(MainActivity.this,"Data Inserted", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Data not Inserted", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+
+    };
+
+    }
+
     public void onClick(View v){
         if(v.getId()==R.id.scan_button){
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);

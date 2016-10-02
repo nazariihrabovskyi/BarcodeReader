@@ -1,5 +1,6 @@
 package com.example.naz.barcodereader;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -31,4 +32,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXIST"+TABLE_NAME);
         onCreate(db);
     }
+
+    public boolean insertData(String scanContent,String scanFormat)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2,scanContent);
+        contentValues.put(COL_3,scanFormat);
+        long result = db.insert(TABLE_NAME,null,contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+
+    }
+
 }
+
